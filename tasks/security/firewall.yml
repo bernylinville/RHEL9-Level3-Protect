@@ -1,0 +1,18 @@
+---
+
+- name: "Configure firewall | Configure firewalld security policy"
+  block:
+    - name: "Configure firewall | Configure firewalld security policy | Enable firewalld service"
+      ansible.builtin.systemd:
+        name: firewalld
+        state: started
+        enabled: true
+
+    - name: "Configure firewall | Configure firewalld security policy | Open ports"
+      ansible.posix.firewalld:
+        port: "{{ item }}"
+        permanent: true
+        state: enabled
+        immediate: true
+      loop:
+        - "{{ ssh_port }}/tcp"

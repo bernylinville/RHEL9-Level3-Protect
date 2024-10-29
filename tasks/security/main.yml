@@ -27,3 +27,19 @@
 - name: "SECURITY | Configure aliases"
   ansible.builtin.import_tasks:
     file: aliases.yml
+
+- name: "SECURITY | Configure ps1"
+  ansible.builtin.import_tasks:
+    file: ps1.yml
+
+- name: "SECURITY | Configure ctrlaltdel"
+  ansible.builtin.import_tasks:
+    file: ctrlaltdel.yml
+
+- name: "SECURITY | Configure recyclebin"
+  ansible.builtin.import_tasks:
+    file: recyclebin.yml
+
+- name: "SECURITY | Configure firewall"
+  ansible.builtin.import_tasks:
+    file: firewall.yml

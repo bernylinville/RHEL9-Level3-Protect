@@ -1,0 +1,26 @@
+---
+
+- name: "Configure recyclebin | Set file or directory delete recycle bin alias"
+  block:
+    - name: "Configure recyclebin | Set file or directory delete recycle bin alias | Copy remove.sh to /usr/local/bin"
+      ansible.builtin.copy:
+        src: files/remove.sh
+        dest: /usr/local/bin/remove.sh
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: "Configure recyclebin | Set file or directory delete recycle bin alias | Add alias to /etc/bashrc"
+      ansible.builtin.blockinfile:
+        path: /etc/bashrc
+        marker: "# {mark} ANSIBLE MANAGED BLOCK - RECYCLEBIN ALIAS"
+        block: |
+          alias rm="sh /usr/local/bin/remove.sh"
+
+    - name: "Configure recyclebin | Set file or directory delete recycle bin alias | Add alias to /etc/profile.d/alias.sh"
+      ansible.builtin.copy:
+        src: files/alias.sh
+        dest: /etc/profile.d/alias.sh
+        owner: root
+        group: root
+        mode: '0644'

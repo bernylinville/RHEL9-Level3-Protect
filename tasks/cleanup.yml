@@ -1,0 +1,33 @@
+---
+
+- name: "Cleanup | Stop {{ history_dir }} directory write protection"
+  ansible.builtin.shell: chattr -R -a {{ history_dir }}
+
+- name: "Cleanup | Clean up potential threat files"
+  ansible.builtin.shell: |
+   find / -maxdepth 3 \( -name hosts.equiv -o -name equiv -o -name .netrc -o -name .rhosts -o -name rhosts \) -exec rm -f {} \;
+
+- name: "Cleanup | Clean up software cache"
+  ansible.builtin.shell: dnf clean all
+
+- name: "Cleanup | Clean up backup and cache files directory"
+  ansible.builtin.shell: |
+    find /var/cache/fontconfig -type f -delete
+    find /var/backups -type f -delete
+
+- name: "Cleanup | Clean up application log cache files and temporary directory"
+  ansible.builtin.shell: |
+    find /var/log/ \( -name "*.log-*" -o -name "*.log.*" -o -name "*-*" \) -type f -delete
+    find /var/log -type f -name "*log" -exec truncate -s 0 {} \;
+
+- name: "Cleanup | Clean up system recycle bin"
+  ansible.builtin.shell: |
+    find ~/.trash/* -delete
+    find /home/ -type d -name .trash -exec find {} -delete \;
+    find /opt/security/* -delete
+
+- name: "Cleanup | Clean up command line history"
+  ansible.builtin.shell: history -c
+
+- name: "Cleanup | Enable {{ history_dir }} directory write protection"
+  ansible.builtin.shell: chattr -R +a {{ history_dir }}

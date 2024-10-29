@@ -44,7 +44,7 @@ ntp_server:
   - ntp.aliyun.com
   - ntp.tencent.com
 
-ssh_port: 350012
+ssh_port: 35012
 ssh_login_timeout: 300
 
 login_fail_count: 6
@@ -129,3 +129,7 @@ sysctl_conf:
 
 history_size: 256
 history_dir: "/var/log/.history"
+
+cleanup: true
+
+reboot_required: true

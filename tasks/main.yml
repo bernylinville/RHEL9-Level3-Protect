@@ -49,3 +49,22 @@
   when: rhel9_level3_protect_logs
   tags:
     - rhel9_level3_protect_logs
+
+- name: Run cleanup tasks
+  ansible.builtin.import_tasks:
+    file: cleanup.yml
+  when: cleanup
+  tags:
+    - cleanup
+
+- name: Reboot system
+  ansible.builtin.reboot:
+    msg: "Rebooting the system to apply all changes."
+    connect_timeout: 300
+    pre_reboot_delay: 10
+    post_reboot_delay: 60
+    reboot_timeout: 600
+    test_command: uptime
+  when: reboot_required | default(true)
+  tags:
+    - reboot

@@ -1,0 +1,21 @@
+---
+
+- name: "Configure ctrlaltdel | Disable ctrl+alt+del key restart computer"
+  block:
+    - name: "Configure ctrlaltdel | Disable ctrl+alt+del key restart computer | Stop ctrl-alt-del.target service"
+      ansible.builtin.systemd:
+        name: ctrl-alt-del.target
+        state: stopped
+        enabled: false
+
+    - name: "Configure ctrlaltdel | Disable ctrl+alt+del key restart computer | Move ctrl-alt-del.target to backup directory"
+      ansible.builtin.file:
+        src: /usr/lib/systemd/system/ctrl-alt-del.target
+        dest: /usr/lib/systemd/system/ctrl-alt-del.target.disabled
+        state: present
+
+    - name: "Configure ctrlaltdel | Disable ctrl+alt+del key restart computer | Set CtrlAltDelBurstAction to none"
+      ansible.builtin.replace:
+        path: /etc/systemd/system.conf
+        regexp: '^#CtrlAltDelBurstAction=.*$'
+        replace: 'CtrlAltDelBurstAction=none'

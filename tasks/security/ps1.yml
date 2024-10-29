@@ -1,0 +1,14 @@
+---
+
+- name: "Configure ps1 | Customize PS1 format"
+  block:
+    - name: "Configure ps1 | Customize PS1 format | Add PS1 to /etc/bashrc"
+      ansible.builtin.blockinfile:
+        path: /etc/bashrc
+        marker: "# {mark} ANSIBLE MANAGED BLOCK - PS1 CUSTOMIZATION"
+        block: |
+          if [ $UID -eq 0 ]; then
+            export PS1="[\[\e[33;40m\]\u\[\e[0m\]@\[\e[36;40m\]\h\[\e[0m\] \[\e[01;31m\]`hostname -I|cut -d ' ' -f 1`\[\e[0m\] \W]# "
+          else
+            export PS1="[\[\e[33;40m\]\u\[\e[0m\]@\[\e[36;40m\]\h\[\e[0m\] \[\e[01;31m\]`hostname -I|cut -d ' ' -f 1`\[\e[0m\] \W]\\$ "
+          fi
