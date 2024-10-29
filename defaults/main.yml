@@ -133,3 +133,6 @@ history_dir: "/var/log/.history"
 cleanup: true
 
 reboot_required: true
+
+firewall_ports:
+  - "{{ ssh_port }}/tcp"

@@ -14,5 +14,4 @@
         permanent: true
         state: enabled
         immediate: true
-      loop:
-        - "{{ ssh_port }}/tcp"
+      loop: "{{ firewall_ports }}"
