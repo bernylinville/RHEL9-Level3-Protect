@@ -35,3 +35,17 @@
   when: rhel9_level3_protect_security
   tags:
     - rhel9_level3_protect_security
+
+- name: Run optimize tasks
+  ansible.builtin.import_tasks:
+    file: optimize/main.yml
+  when: rhel9_level3_protect_optimize
+  tags:
+    - rhel9_level3_protect_optimize
+
+- name: Run logs tasks
+  ansible.builtin.import_tasks:
+    file: logs/main.yml
+  when: rhel9_level3_protect_logs
+  tags:
+    - rhel9_level3_protect_logs

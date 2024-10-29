@@ -23,3 +23,7 @@
 - name: "SECURITY | Configure privilege"
   ansible.builtin.import_tasks:
     file: privilege.yml
+
+- name: "SECURITY | Configure aliases"
+  ansible.builtin.import_tasks:
+    file: aliases.yml

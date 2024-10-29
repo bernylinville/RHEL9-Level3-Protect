@@ -1,0 +1,25 @@
+---
+
+- name: "Configure rsyslog | Set rsyslog security policy"
+  block:
+    - name: "Configure rsyslog | Set rsyslog security policy | Check rsyslog config file have kern.debug;daemon.notice"
+      ansible.builtin.shell:
+        cmd: grep -q "kern.debug;daemon.notice" /etc/rsyslog.conf
+        register: rsyslog_conf_file_check
+
+    - name: "Configure rsyslog | Set rsyslog security policy | Add kern.debug;daemon.notice to rsyslog config file"
+      ansible.builtin.lineinfile:
+        path: /etc/rsyslog.conf
+        line: "*.err;kern.debug;daemon.notice    /var/log/adm"
+        state: present
+
+    - name: "Configure rsyslog | Set rsyslog security policy | Check rsyslog config file have authpriv.*"
+      ansible.builtin.shell:
+        cmd: grep -q "authpriv.*" /etc/rsyslog.conf
+        register: rsyslog_conf_file_check
+
+    - name: "Configure rsyslog | Set rsyslog security policy | Add authpriv.* to rsyslog config file"
+      ansible.builtin.lineinfile:
+        path: /etc/rsyslog.conf
+        line: "authpriv.* /var/log/secure"
+        state: present

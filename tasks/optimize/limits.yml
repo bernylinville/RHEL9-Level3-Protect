@@ -1,0 +1,23 @@
+---
+
+- name: "Optimize limits | Optimize system resources limits"
+  block:
+    - name: "Optimize limits | Optimize system resources limits | Configure ulimit -HSn in /etc/profile"
+      ansible.builtin.lineinfile:
+        path: /etc/profile
+        regexp: '^\s*ulimit -HSn\s+\w+.*$'
+        line: 'ulimit -HSn 655350'
+
+    - name: "Optimize limits | Optimize system resources limits | Configure ulimit -HSu in /etc/profile"
+      ansible.builtin.lineinfile:
+        path: /etc/profile
+        regexp: '^\s*ulimit -HSu\s+\w+.*$'
+        line: 'ulimit -HSu 655350'
+
+    - name: "Optimize limits | Optimize system resources limits | Create /etc/security/limits.d/limits.conf"
+      ansible.builtin.copy:
+        src: files/limits.conf
+        dest: /etc/security/limits.d/limits.conf
+        owner: root
+        group: root
+        mode: '0644'

@@ -1,0 +1,30 @@
+---
+
+- name: "Configure history log | Set user command history log security policy"
+  block:
+    - name: "Configure history log | Set user command history log security policy | Set history log size {{ history_size }}"
+      ansible.builtin.lineinfile:
+        path: /etc/profile
+        regexp: '^\s*HISTSIZE\s*=\s*\d+$'
+        line: "HISTSIZE={{ history_size }}"
+
+    - name: "Configure history log | Set user command history log security policy | Copy history log dir {{ history_dir }}"
+      ansible.builtin.file:
+        path: "{{ history_dir }}"
+        state: directory
+        owner: root
+        group: root
+        mode: '0600'
+
+    - name: "Configure history log | Set user command history log security policy | Copy history log record script"
+      ansible.builtin.copy:
+        src: files/history-record.sh
+        dest: /etc/profile.d/history-record.sh
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: "Configure history log | Set user command history log security policy | Source history log record script"
+      ansible.builtin.shell:
+        cmd: source /etc/profile.d/history-record.sh
+        executable: /bin/bash

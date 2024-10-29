@@ -1,0 +1,33 @@
+---
+
+- name: "Configure auditd | Set auditd security policy"
+  block:
+    - name: "Configure auditd | Set auditd security policy | Add audit=1 to GRUB_CMDLINE_LINUX"
+      ansible.builtin.lineinfile:
+        path: /etc/default/grub
+        regexp: '^GRUB_CMDLINE_LINUX="([^"]*)"'
+        line: 'GRUB_CMDLINE_LINUX="audit=1 \1"'
+        backrefs: true
+        state: present
+      notify: Regenerate grub2 config
+
+    - name: "Configure auditd | Set auditd security policy | Check auditd service status"
+      ansible.builtin.systemd:
+        name: auditd
+        state: started
+        enabled: true
+
+    - name: "Configure auditd | Set auditd security policy | Create rule file"
+      ansible.builtin.copy:
+        src: files/audit-policy.rules
+        dest: /etc/audit/rules.d/audit-policy.rules
+        owner: root
+        group: root
+        mode: '0600'
+
+    - name: "Configure auditd | Set auditd security policy | Monitor root user's system calls with execve"
+      ansible.builtin.shell: auditctl -a exit,always -F arch=b64 -S execve -F uid=0
+
+  handlers:
+    - name: "Regenerate grub2 config"
+      ansible.builtin.command: grub2-mkconfig -o /etc/grub2.cfg

@@ -1,0 +1,12 @@
+---
+
+- name: "Configure kernel | Configure system kernel parameters"
+  block:
+    - name: "Configure kernel | Configure system kernel parameters | Posix /etc/sysctl.d/99-sysctl.conf"
+      ansible.posix.sysctl:
+        name: "{{ item.key }}"
+        value: "{{ item.value }}"
+        sysctl_file: /etc/sysctl.d/99-sysctl.conf
+        reload: true
+        sysctl_set: true
+      loop: "{{ sysctl_conf | dict2items }}"

@@ -1,0 +1,13 @@
+---
+
+- name: "LOGS | Configure history log"
+  ansible.builtin.import_tasks:
+    file: history.yml
+
+- name: "LOGS | Configure rsyslog"
+  ansible.builtin.import_tasks:
+    file: rsyslog.yml
+
+- name: "LOGS | Configure auditd"
+  ansible.builtin.import_tasks:
+    file: auditd.yml

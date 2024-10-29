@@ -1,0 +1,22 @@
+---
+
+- name: "Optimize swap | Disable swap"
+  block:
+    - name: "Optimize swap | Disable swap | Disable swap in /etc/fstab"
+      ansible.builtin.lineinfile:
+        path: /etc/fstab
+        regexp: '^\s*[^#].*swap.*$'
+        line: '# {{ item }}'
+        state: absent
+
+    - name: "Optimize swap | Disable swap | Disable swap in /etc/sysctl.conf"
+      ansible.posix.sysctl:
+        name: vm.swappiness
+        value: 0
+        sysctl_file: /etc/sysctl.d/99-swap.conf
+        reload: true
+        sysctl_set: true
+
+    - name: "Optimize swap | Disable swap | Disable swap command"
+      ansible.builtin.shell:
+        cmd: swapoff -a

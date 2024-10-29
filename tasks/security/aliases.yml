@@ -1,0 +1,145 @@
+---
+
+- name: "Configure aliases | Disable system unnecessary aliases"
+  block:
+    - name: "Configure aliases | Disable system unnecessary aliases | Check /etc/aliases exist"
+      ansible.builtin.stat:
+        path: /etc/aliases
+      register: aliases_stat
+
+    - name: "Configure aliases | Disable system unnecessary aliases | Disable system unnecessary aliases"
+      when: aliases_stat.stat.exists
+      block:
+        - name: "Configure aliases | Disable system unnecessary aliases | Disable system unnecessary aliases | games"
+          ansible.builtin.replace:
+            path: /etc/aliases
+            regexp: '^games:'
+            replace: '# games:'
+
+        - name: "Configure aliases | Disable system unnecessary aliases | Disable system unnecessary aliases | ingres"
+          ansible.builtin.replace:
+            path: /etc/aliases
+            regexp: '^ingres:'
+            replace: '# ingres:'
+
+        - name: "Configure aliases | Disable system unnecessary aliases | Disable system unnecessary aliases | system"
+          ansible.builtin.replace:
+            path: /etc/aliases
+            regexp: '^system:'
+            replace: '# system:'
+
+        - name: "Configure aliases | Disable system unnecessary aliases | Disable system unnecessary aliases | toor"
+          ansible.builtin.replace:
+            path: /etc/aliases
+            regexp: '^toor:'
+            replace: '# toor:'
+
+        - name: "Configure aliases | Disable system unnecessary aliases | Disable system unnecessary aliases | uucp"
+          ansible.builtin.replace:
+            path: /etc/aliases
+            regexp: '^uucp:'
+            replace: '# uucp:'
+
+        - name: "Configure aliases | Disable system unnecessary aliases | Disable system unnecessary aliases | manager"
+          ansible.builtin.replace:
+            path: /etc/aliases
+            regexp: '^manager:'
+            replace: '# manager:'
+
+        - name: "Configure aliases | Disable system unnecessary aliases | Disable system unnecessary aliases | dumper"
+          ansible.builtin.replace:
+            path: /etc/aliases
+            regexp: '^dumper:'
+            replace: '# dumper:'
+
+        - name: "Configure aliases | Disable system unnecessary aliases | Disable system unnecessary aliases | operator"
+          ansible.builtin.replace:
+            path: /etc/aliases
+            regexp: '^operator:'
+            replace: '# operator:'
+
+        - name: "Configure aliases | Disable system unnecessary aliases | Disable system unnecessary aliases | root"
+          ansible.builtin.replace:
+            path: /etc/aliases
+            regexp: '^root:'
+            replace: '# root:'
+
+        - name: "Configure aliases | Disable system unnecessary aliases | Disable system unnecessary aliases | decode"
+          ansible.builtin.replace:
+            path: /etc/aliases
+            regexp: '^decode:'
+            replace: '# decode:'
+
+        - name: "Configure aliases | Disable system unnecessary aliases | Disable system unnecessary aliases | root"
+          ansible.builtin.replace:
+            path: /etc/aliases
+            regexp: '^root:'
+            replace: '# root:'
+
+    - name: "Configure aliases | Disable system unnecessary aliases | Check /etc/mail/aliases exist"
+      ansible.builtin.stat:
+        path: /etc/mail/aliases
+      register: mail_aliases_stat
+
+    - name: "Configure aliases | Disable system unnecessary aliases | Disable mail unnecessary aliases | root"
+      when: mail_aliases_stat.stat.exists
+      block:
+        - name: "Configure aliases | Disable system unnecessary aliases | Disable mail unnecessary aliases | games"
+          ansible.builtin.replace:
+            path: /etc/mail/aliases
+            regexp: '^games:'
+            replace: '# games:'
+
+        - name: "Configure aliases | Disable system unnecessary aliases | Disable mail unnecessary aliases | ingres"
+          ansible.builtin.replace:
+            path: /etc/mail/aliases
+            regexp: '^ingres:'
+            replace: '# ingres:'
+
+        - name: "Configure aliases | Disable system unnecessary aliases | Disable mail unnecessary aliases | system"
+          ansible.builtin.replace:
+            path: /etc/mail/aliases
+            regexp: '^system:'
+            replace: '# system:'
+
+        - name: "Configure aliases | Disable system unnecessary aliases | Disable mail unnecessary aliases | toor"
+          ansible.builtin.replace:
+            path: /etc/mail/aliases
+            regexp: '^toor:'
+            replace: '# toor:'
+
+        - name: "Configure aliases | Disable system unnecessary aliases | Disable mail unnecessary aliases | uucp"
+          ansible.builtin.replace:
+            path: /etc/mail/aliases
+            regexp: '^uucp:'
+            replace: '# uucp:'
+
+        - name: "Configure aliases | Disable system unnecessary aliases | Disable mail unnecessary aliases | manager"
+          ansible.builtin.replace:
+            path: /etc/mail/aliases
+            regexp: '^manager:'
+            replace: '# manager:'
+
+        - name: "Configure aliases | Disable system unnecessary aliases | Disable mail unnecessary aliases | dumper"
+          ansible.builtin.replace:
+            path: /etc/mail/aliases
+            regexp: '^dumper:'
+            replace: '# dumper:'
+
+        - name: "Configure aliases | Disable system unnecessary aliases | Disable mail unnecessary aliases | operator"
+          ansible.builtin.replace:
+            path: /etc/mail/aliases
+            regexp: '^operator:'
+            replace: '# operator:'
+
+        - name: "Configure aliases | Disable system unnecessary aliases | Disable mail unnecessary aliases | decode"
+          ansible.builtin.replace:
+            path: /etc/mail/aliases
+            regexp: '^decode:'
+            replace: '# decode:'
+
+        - name: "Configure aliases | Disable system unnecessary aliases | Disable mail unnecessary aliases | root"
+          ansible.builtin.replace:
+            path: /etc/mail/aliases
+            regexp: '^root:'
+            replace: '# root:'

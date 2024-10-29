@@ -1,0 +1,13 @@
+---
+
+- name: "OPTIMIZE | Configure kernel"
+  ansible.builtin.import_tasks:
+    file: kernel.yml
+
+- name: "OPTIMIZE | Optimize limits"
+  ansible.builtin.import_tasks:
+    file: limits.yml
+
+- name: "OPTIMIZE | Optimize swap"
+  ansible.builtin.import_tasks:
+    file: swap.yml
