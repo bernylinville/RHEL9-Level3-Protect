@@ -44,3 +44,33 @@ ntp_server:
 
 ssh_port: 350012
 ssh_login_timeout: 300
+
+login_fail_count: 6
+login_lock_time: 600
+login_timeout: 300
+
+pass_min_days: 1
+pass_max_days: 90
+pass_warn_age: 30
+pass_min_len: 12
+pass_encrypt: SHA512
+pass_retry: 3
+pass_difok: 6
+pass_minclass: 3
+pass_ucredit: -1
+pass_lcredit: -1
+pass_dcredit: -1
+pass_ocredit: -1
+pass_remember: 3
+
+root_password: "changeme@2024"
+# 运维用户
+ops_user_name: "admin"
+ops_user_password: "changeme@2024"
+# 开发普通用户
+dev_user_name: "dev"
+dev_user_password: "changeme@2024"
+
+sudo_log_file: "/var/log/sudo.log"
+
+umask: 022

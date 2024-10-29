@@ -1,0 +1,24 @@
+---
+
+- name: "Configure privilege | Configure system file privilege"
+  block:
+    - name: "Configure privilege | Configure system file privilege | Set umask"
+      ansible.builtin.lineinfile:
+        path: /etc/profile
+        regexp: '^\s*umask\s+\w+.*$'
+        line: "umask {{ umask }}"
+        state: present
+
+    - name: "Configure privilege | Configure system file privilege | Set /etc/login.defs"
+      ansible.builtin.lineinfile:
+        path: /etc/login.defs
+        regexp: '^\s*UMASK\s+\w+.*$'
+        line: "UMASK {{ umask }}"
+        state: present
+
+    - name: "Configure privilege | Configure system file privilege | Set /etc/security/opasswd"
+      ansible.builtin.file:
+        path: /etc/security/opasswd
+        owner: root
+        group: root
+        mode: '0600'

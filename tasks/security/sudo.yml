@@ -1,0 +1,31 @@
+---
+
+- name: "Configure sudo | Configure sudo user"
+  block:
+    - name: "Configure sudo | Configure sudo user | Template user to /etc/sudoers.d/user file"
+      ansible.builtin.template:
+        src: "user.j2"
+        dest: "/etc/sudoers.d/user"
+        owner: root
+        group: root
+        mode: '0440'
+
+    - name: "Configure sudo | Configure sudo user | Configure sudo log file"
+      ansible.builtin.template:
+        src: "log.j2"
+        dest: "/etc/sudoers.d/log"
+        owner: root
+        group: root
+        mode: '0440'
+
+    - name: "Configure sudo | Configure sudo user | Configure /etc/rsyslog.conf"
+      ansible.builtin.lineinfile:
+        path: "/etc/rsyslog.conf"
+        line: "local2.debug -{{ sudo_log_file }}"
+        state: present
+
+    - name: "Configure sudo | Configure sudo user | Restart rsyslog"
+      ansible.builtin.systemd:
+        name: rsyslog
+        state: restarted
+        enabled: true

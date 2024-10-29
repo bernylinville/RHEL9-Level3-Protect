@@ -3,3 +3,23 @@
 - name: "SECURITY | Configure sshd"
   ansible.builtin.import_tasks:
     file: sshd.yml
+
+- name: "SECURITY | Configure login"
+  ansible.builtin.import_tasks:
+    file: login.yml
+
+- name: "SECURITY | Configure password complexity"
+  ansible.builtin.import_tasks:
+    file: password.yml
+
+- name: "SECURITY | Configure user password"
+  ansible.builtin.import_tasks:
+    file: user.yml
+
+- name: "SECURITY | Configure sudo"
+  ansible.builtin.import_tasks:
+    file: sudo.yml
+
+- name: "SECURITY | Configure privilege"
+  ansible.builtin.import_tasks:
+    file: privilege.yml

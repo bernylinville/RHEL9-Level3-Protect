@@ -1,0 +1,33 @@
+---
+
+- name: "Configure login | Configure user login failure lock and root account"
+  block:
+    - name: "Configure login | Configure user login failure lock and root account | Configure deny times for user login failure"
+      ansible.builtin.lineinfile:
+        path: /etc/security/faillock.conf
+        line: "deny = {{ login_fail_count }}"
+        state: present
+
+    - name: "Configure login | Configure user login failure lock and root account | Configure even_deny_root"
+      ansible.builtin.lineinfile:
+        path: /etc/security/faillock.conf
+        line: "even_deny_root"
+        state: present
+
+    - name: "Configure login | Configure user login failure lock and root account | Configure unlock_time for user login failure"
+      ansible.builtin.lineinfile:
+        path: /etc/security/faillock.conf
+        line: "unlock_time = {{ login_lock_time }}"
+        state: present
+
+    - name: "Configure login | Configure user login failure lock and root account | Configure root_unlock_time for user login failure"
+      ansible.builtin.lineinfile:
+        path: /etc/security/faillock.conf
+        line: "root_unlock_time = {{ login_lock_time }}"
+        state: present
+
+    - name: "Configure login | Configure user login failure lock and root account | Set login timeout"
+      ansible.builtin.lineinfile:
+        path: /etc/profile
+        line: "TMOUT={{ login_timeout }}"
+        state: present

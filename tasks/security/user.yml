@@ -1,0 +1,41 @@
+---
+
+- name: "Configure user password | Configure user and password"
+  block:
+    - name: "Configure user password | Configure user and password | Configure root password"
+      ansible.builtin.user:
+        name: root
+        password: "{{ root_password | password_hash('sha512', 'mysecretsalt') }}"
+        update_password: always
+      when: root_password is defined
+
+    - name: "Configure user password | Configure user and password | Check {{ ops_user_name }} user exists"
+      ansible.builtin.stat:
+        path: "/home/{{ ops_user_name }}"
+      register: ops_user_exists
+
+    - name: "Configure user password | Configure user and password | Create {{ ops_user_name }} user if not exists"
+      ansible.builtin.user:
+        name: "{{ ops_user_name }}"
+        home: "/home/{{ ops_user_name }}"
+        shell: /bin/bash
+        groups: wheel
+        password: "{{ ops_user_password | password_hash('sha512', 'mysecretsalt') }}"
+        update_password: always
+        state: present
+      when: ops_user_exists.stat.exists is false
+
+    - name: "Configure user password | Configure user and password | Check {{ dev_user_name }} user exists"
+      ansible.builtin.stat:
+        path: "/home/{{ dev_user_name }}"
+      register: dev_user_exists
+
+    - name: "Configure user password | Configure user and password | Create {{ dev_user_name }} user if not exists"
+      ansible.builtin.user:
+        name: "{{ dev_user_name }}"
+        home: "/home/{{ dev_user_name }}"
+        shell: /bin/bash
+        password: "{{ dev_user_password | password_hash('sha512', 'mysecretsalt') }}"
+        update_password: always
+        state: present
+      when: dev_user_exists.stat.exists is false
