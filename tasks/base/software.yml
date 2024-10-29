@@ -1,0 +1,14 @@
+---
+
+- name: "BASE | Configure software"
+  block:
+    - name: "BASE | Configure software | Update system"
+      ansible.builtin.dnf:
+        state: update
+        update_cache: true
+
+    - name: "BASE | Configure software | Install software"
+      ansible.builtin.dnf:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ software_list }}"

@@ -1,0 +1,5 @@
+---
+
+- name: "SECURITY | Configure sshd"
+  ansible.builtin.import_tasks:
+    file: sshd.yml

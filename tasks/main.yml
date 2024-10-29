@@ -1,0 +1,37 @@
+---
+# tasks file for RHEL9-Level3-Protect
+
+- name: Check OS version and family
+  ansible.builtin.assert:
+    that: (ansible_facts.distribution != 'CentOS' and ansible_facts.os_family == 'RedHat' or ansible_facts.os_family == "Rocky") and ansible_facts.distribution_major_version is version_compare('9', '==')
+    fail_msg: "This role can only be run against Supported OSs. {{ ansible_facts.distribution }} {{ ansible_facts.distribution_major_version }} is not supported."
+    success_msg: "This role is running against a supported OS {{ ansible_facts.distribution }} {{ ansible_facts.distribution_major_version }}"
+  when:
+    - os_check
+
+- name: Check ansible version
+  ansible.builtin.assert:
+    that: ansible_version.full is version_compare(min_ansible_version, '>=')
+    fail_msg: "You must use Ansible {{ min_ansible_version }} or greater"
+    success_msg: "This role is running a supported version of ansible {{ ansible_version.full }} >= {{ min_ansible_version }}"
+
+- name: Run base tasks
+  ansible.builtin.import_tasks:
+    file: base/main.yml
+  when: rhel9_level3_protect_base
+  tags:
+    - rhel9_level3_protect_base
+
+- name: Run software tasks
+  ansible.builtin.import_tasks:
+    file: software/main.yml
+  when: rhel9_level3_protect_software
+  tags:
+    - rhel9_level3_protect_software
+
+- name: Run security tasks
+  ansible.builtin.import_tasks:
+    file: security/main.yml
+  when: rhel9_level3_protect_security
+  tags:
+    - rhel9_level3_protect_security

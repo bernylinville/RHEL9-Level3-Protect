@@ -1,0 +1,148 @@
+---
+
+- name: "Configure sshd | Configure /etc/ssh/sshd_config"
+  block:
+    - name: "Configure sshd | Configure /etc/ssh/sshd_config | Add ssh login banner"
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        line: "Banner /etc/issue.net"
+        state: present
+
+    - name: "Configure sshd | Configure /etc/ssh/sshd_config | Set PermitRootLogin no"
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        line: "PermitRootLogin no"
+        state: present
+
+    - name: "Configure sshd | Configure /etc/ssh/sshd_config | Set StrictModes yes"
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        line: "StrictModes yes"
+        state: present
+
+    - name: "Configure sshd | Configure /etc/ssh/sshd_config | Set Port {{ ssh_port }}"
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        line: "Port {{ ssh_port }}"
+        state: present
+
+    - name: "Configure sshd | Configure /etc/ssh/sshd_config | Set IgnoreRhosts yes"
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        line: "IgnoreRhosts yes"
+        state: present
+
+    - name: "Configure sshd | Configure /etc/ssh/sshd_config | Set HostbasedAuthentication no"
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        line: "HostbasedAuthentication no"
+        state: present
+
+    - name: "Configure sshd | Configure /etc/ssh/sshd_config | Set Protocol 2"
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        line: "Protocol 2"
+        state: present
+
+    - name: "Configure sshd | Configure /etc/ssh/sshd_config | Set LogLevel INFO"
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        line: "LogLevel INFO"
+        state: present
+
+    - name: "Configure sshd | Configure /etc/ssh/sshd_config | Set PermitEmptyPasswords no"
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        line: "PermitEmptyPasswords no"
+        state: present
+
+    - name: "Configure sshd | Configure /etc/ssh/sshd_config | Set MaxAuthTries 5"
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        line: "MaxAuthTries 5"
+        state: present
+
+    - name: "Configure sshd | Configure /etc/ssh/sshd_config | Set ClientAliveInterval {{ ssh_login_timeout }}"
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        line: "ClientAliveInterval {{ ssh_login_timeout }}"
+        state: present
+
+    - name: "Configure sshd | Configure /etc/ssh/sshd_config | Set ClientAliveCountMax 3"
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        line: "ClientAliveCountMax 3"
+        state: present
+
+    - name: "Configure sshd | Configure /etc/ssh/sshd_config | Set PermitUserEnvironment no"
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        line: "PermitUserEnvironment no"
+        state: present
+
+    - name: "Configure sshd | Configure /etc/ssh/sshd_config | Set Ciphers aes256-ctr,aes128-ctr,aes192-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com"
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        line: "Ciphers aes256-ctr,aes128-ctr,aes192-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com"
+        state: present
+
+    - name: "Configure sshd | Configure /etc/ssh/sshd_config | Set LoginGraceTime 60"
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        line: "LoginGraceTime 60"
+        state: present
+
+    - name: "Configure sshd | Configure /etc/ssh/sshd_config | Set X11Forwarding no"
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        line: "X11Forwarding no"
+        state: present
+
+    - name: "Configure sshd | Configure /etc/ssh/sshd_config | Set X11UseLocalhost yes"
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        line: "X11UseLocalhost yes"
+        state: present
+
+    - name: "Configure sshd | Configure /etc/ssh/sshd_config | Set AllowTcpForwarding no"
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        line: "AllowTcpForwarding no"
+        state: present
+
+    - name: "Configure sshd | Configure /etc/ssh/sshd_config | Set AllowAgentForwarding no"
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        line: "AllowAgentForwarding no"
+        state: present
+
+- name: "Configure sshd | Configure ssh file permission"
+  block:
+    - name: "Configure sshd | Configure ssh file permission | Set sshd_config file permission"
+      ansible.builtin.file:
+        path: /etc/ssh/sshd_config
+        owner: root
+        group: root
+        mode: '0600'
+
+    - name: "Configure sshd | Configure ssh file permission | Find ssh_keys file"
+      ansible.builtin.find:
+        paths: /etc/ssh
+        patterns: '*key'
+      register: ssh_keys_files
+
+    - name: "Configure sshd | Configure ssh file permission | Set ssh_keys file permission"
+      ansible.builtin.file:
+        path: "{{ item.path }}"
+        owner: root
+        group: ssh_keys
+        mode: '0400'
+      loop: "{{ ssh_keys_files.files }}"
+
+    - name: "Configure sshd | Configure ssh file permission | Set ssh_keys.pub file permission"
+      ansible.builtin.file:
+        path: "{{ item.path }}.pub"
+        owner: root
+        group: root
+        mode: '0444'
+      loop: "{{ ssh_keys_files.files }}"

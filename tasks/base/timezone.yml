@@ -1,0 +1,16 @@
+---
+
+- name: "Configure timezone | Configure timezone and hwclock"
+  block:
+    - name: "Configure timezone | Configure timezone and hwclock | Set timezone"
+      community.general.timezone:
+        name: "{{ timezone }}"
+        hwclock: true
+
+    - name: "Configure timezone | Configure timezone and hwclock | Restart rsyslog and crond"
+      ansible.builtin.systemd:
+        name: "{{ item }}"
+        state: restarted
+      loop:
+        - rsyslog
+        - crond

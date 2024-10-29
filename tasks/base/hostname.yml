@@ -1,0 +1,18 @@
+---
+
+- name: "Configure hostname and /etc/hosts | Configure hostname"
+  block:
+    - name: "Configure hostname and /etc/hosts | Configure hostname | Update hostname"
+      ansible.builtin.hostname:
+        name: "{{ inventory_hostname }}"
+      when: ansible_hostname != inventory_hostname
+
+- name: "Configure hostname and /etc/hosts | Configure /etc/hosts"
+  block:
+    - name: "Configure hostname and /etc/hosts | Configure /etc/hosts | Update /etc/hosts"
+      ansible.builtin.lineinfile:
+        path: /etc/hosts
+        regexp: "^{{ ansible_default_ipv4.address }}\\s+\\w+.*$"
+        line: "{{ ansible_default_ipv4.address }} {{ inventory_hostname }}"
+        state: present
+        create: true

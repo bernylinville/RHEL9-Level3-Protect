@@ -1,0 +1,28 @@
+---
+
+- name: "Install chrony | Install chrony and configure"
+  block:
+    - name: "Install chrony | Install chrony and configure | Install chrony"
+      ansible.builtin.dnf:
+        name: chrony
+        state: present
+
+    - name: "Install chrony | Install chrony and configure | Comment out server and pool"
+      ansible.builtin.lineinfile:
+        path: /etc/chrony.conf
+        regexp: "^(server|pool)"
+        line: "# $1"
+        state: present
+
+    - name: "Install chrony | Install chrony and configure | Add ntp server"
+      ansible.builtin.lineinfile:
+        path: /etc/chrony.conf
+        line: "server {{ item }} iburst maxsources 4"
+        state: present
+      loop: "{{ ntp_server }}"
+
+    - name: "Install chrony | Install chrony and configure | Restart chronyd"
+      ansible.builtin.systemd:
+        name: chronyd
+        state: restarted
+        enabled: true

@@ -1,0 +1,5 @@
+---
+
+- name: "SOFTWARE | Install chrony"
+  ansible.builtin.import_tasks:
+      file: chrony.yml

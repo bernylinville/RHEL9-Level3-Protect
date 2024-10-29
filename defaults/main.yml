@@ -1,0 +1,46 @@
+---
+# defaults file for RHEL9-Level3-Protect
+
+# Run the OS validation check
+# Supported OSs will not need for this to be changed - see README e.g. CentOS
+os_check: true
+
+## Switching on/off specific baseline sections
+# These variables govern whether the tasks of a particular section are to be executed when running the role.
+# E.g: If you want to execute the tasks of Section 1 you should set the "_section1" variable to true.
+# If you do not want the tasks from that section to get executed you simply set the variable to "false".
+rhel9_level3_protect_base: true
+rhel9_level3_protect_software: true
+rhel9_level3_protect_security: true
+
+# mirrors.aliyun.com
+os_mirror: mirrors.aliyun.com
+
+#   sudo dnf install tar gcc make pcre-devel zlib-devel vim git unzip ftp wget ntpdate net-tools tree sysstat bash-completion rpcbind nfs-utils
+software_list:
+  - tar
+  - gcc
+  - make
+  - pcre-devel
+  - zlib-devel
+  - vim
+  - git
+  - unzip
+  - ftp
+  - wget
+  - ntpdate
+  - net-tools
+  - tree
+  - sysstat
+  - bash-completion
+  - rpcbind
+  - nfs-utils
+
+timezone: Asia/Shanghai
+
+ntp_server:
+  - ntp.aliyun.com
+  - ntp.tencent.com
+
+ssh_port: 350012
+ssh_login_timeout: 300

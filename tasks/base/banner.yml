@@ -1,0 +1,35 @@
+---
+
+- name: "Configure banner | Configure ssh banner and custom header"
+  block:
+    - name: "Configure banner | Configure ssh banner and custom header | Create /etc/issue"
+      ansible.builtin.copy:
+        src: files/issue
+        dest: /etc/issue
+        owner: root
+        group: root
+        mode: "0644"
+        backup: true
+
+    - name: "Configure banner | Configure ssh banner and custom header | Create /etc/issue.net"
+      ansible.builtin.copy:
+        src: files/issue.net
+        dest: /etc/issue.net
+        owner: root
+        group: root
+        mode: "0644"
+        backup: true
+
+    - name: "Configure banner | Configure ssh banner and custom header | Create /usr/local/bin/00-custom-header"
+      ansible.builtin.copy:
+        src: files/00-custom-header
+        dest: /usr/local/bin/00-custom-header
+        owner: root
+        group: root
+        mode: "0755"
+
+    - name: "Configure banner | Configure ssh banner and custom header | Add 00-custom-header to /etc/profile"
+      ansible.builtin.lineinfile:
+        path: /etc/profile
+        line: "/usr/local/bin/00-custom-header"
+        state: present

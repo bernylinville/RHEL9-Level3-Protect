@@ -1,0 +1,7 @@
+---
+
+- name: Apply RHEL9 Level 3 Protect
+  hosts: all
+  become: true
+  roles:
+    - role: "{{ playbook_dir }}"

@@ -1,0 +1,21 @@
+---
+
+- name: "BASE | Configure hostname and /etc/hosts"
+  ansible.builtin.import_tasks:
+      file: hostname.yml
+
+- name: "BASE | Configure banner"
+  ansible.builtin.import_tasks:
+      file: banner.yml
+
+- name: "BASE | Configure mirror"
+  ansible.builtin.import_tasks:
+      file: mirror.yml
+
+- name: "BASE | Configure software"
+  ansible.builtin.import_tasks:
+      file: software.yml
+
+- name: "BASE | Configure timezone"
+  ansible.builtin.import_tasks:
+      file: timezone.yml
