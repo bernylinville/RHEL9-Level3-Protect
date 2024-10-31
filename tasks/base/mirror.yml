@@ -24,7 +24,8 @@
         backrefs: true
       loop: "{{ repo_files.files }}"
 
-    - name: "Configure mirror | Configure os software mirror | Clean dnf cache and makecache"
-      ansible.builtin.dnf:
-        state: clean
-        update_cache: true
+    - name: "Configure mirror | Configure os software mirror | Clean dnf cache"
+      ansible.builtin.command: sudo dnf clean all
+
+    - name: "Configure mirror | Configure os software mirror | Makecache"
+      ansible.builtin.command: sudo dnf makecache

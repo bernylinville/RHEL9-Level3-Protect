@@ -47,3 +47,7 @@ benchparse/
 
 # GitHub Action/Workflow files
 .github/
+
+hosts.yml
+
+.python-version

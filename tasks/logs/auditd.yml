@@ -9,7 +9,9 @@
         line: 'GRUB_CMDLINE_LINUX="audit=1 \1"'
         backrefs: true
         state: present
-      notify: Regenerate grub2 config
+    
+    - name: "Regenerate grub2 config"
+      ansible.builtin.command: grub2-mkconfig -o /etc/grub2.cfg
 
     - name: "Configure auditd | Set auditd security policy | Check auditd service status"
       ansible.builtin.systemd:
@@ -27,7 +29,3 @@
 
     - name: "Configure auditd | Set auditd security policy | Monitor root user's system calls with execve"
       ansible.builtin.shell: auditctl -a exit,always -F arch=b64 -S execve -F uid=0
-
-  handlers:
-    - name: "Regenerate grub2 config"
-      ansible.builtin.command: grub2-mkconfig -o /etc/grub2.cfg
