@@ -30,13 +30,13 @@ software_list:
   - unzip
   - ftp
   - wget
-  - ntpdate
   - net-tools
   - tree
   - sysstat
   - bash-completion
   - rpcbind
   - nfs-utils
+  - python3-passlib
 
 timezone: Asia/Shanghai
 

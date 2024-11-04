@@ -5,7 +5,7 @@
     - name: "Configure timezone | Configure timezone and hwclock | Set timezone"
       community.general.timezone:
         name: "{{ timezone }}"
-        hwclock: true
+        hwclock: UTC
 
     - name: "Configure timezone | Configure timezone and hwclock | Restart rsyslog and crond"
       ansible.builtin.systemd:

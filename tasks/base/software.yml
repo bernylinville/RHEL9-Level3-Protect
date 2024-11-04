@@ -4,8 +4,13 @@
   block:
     - name: "BASE | Configure software | Update system"
       ansible.builtin.dnf:
-        state: update
+        state: latest
         update_cache: true
+
+    - name: "BASE | Configure software | Install epel-release"
+      ansible.builtin.dnf:
+        name: epel-release
+        state: present
 
     - name: "BASE | Configure software | Install software"
       ansible.builtin.dnf:

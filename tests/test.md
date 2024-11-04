@@ -18,4 +18,7 @@ virt-install \
 # snapshot
 virsh --connect qemu:///system snapshot-create-as almalinux-9-test --name "initial" --description "Initial installation"
 virsh --connect qemu:///system start almalinux-9-test
+
+# restore
+virsh --connect qemu:///system snapshot-revert almalinux-9-test --snapshotname "initial"
 ```
