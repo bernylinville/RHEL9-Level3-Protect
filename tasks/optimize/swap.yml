@@ -6,7 +6,6 @@
       ansible.builtin.lineinfile:
         path: /etc/fstab
         regexp: '^\s*[^#].*swap.*$'
-        line: '# {{ item }}'
         state: absent
 
     - name: "Optimize swap | Disable swap | Disable swap in /etc/sysctl.conf"

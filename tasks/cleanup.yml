@@ -14,17 +14,20 @@
   ansible.builtin.shell: |
     find /var/cache/fontconfig -type f -delete
     find /var/backups -type f -delete
+  failed_when: false
 
 - name: "Cleanup | Clean up application log cache files and temporary directory"
   ansible.builtin.shell: |
     find /var/log/ \( -name "*.log-*" -o -name "*.log.*" -o -name "*-*" \) -type f -delete
     find /var/log -type f -name "*log" -exec truncate -s 0 {} \;
+  failed_when: false
 
 - name: "Cleanup | Clean up system recycle bin"
   ansible.builtin.shell: |
     find ~/.trash/* -delete
     find /home/ -type d -name .trash -exec find {} -delete \;
     find /opt/security/* -delete
+  failed_when: false
 
 - name: "Cleanup | Clean up command line history"
   ansible.builtin.shell: history -c
