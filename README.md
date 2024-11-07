@@ -1,19 +1,87 @@
-# RHEL9 Level 3 Protect
+# RHEL9 Level 3 Protect Ansible Role
 
-A brief description of the role goes here.
+**[中文文档](./README_CN.md)**
+
+The **RHEL9 Level 3 Protect** Ansible role is designed to automate the configuration and hardening of AlmaLinux 9.4 systems to comply with the Level 3 requirements of the Chinese Information Security Standard (等保 3 级). This role ensures that your systems are secured according to best practices, covering aspects such as SSH configuration, user management, firewall settings, and more.
+
+## Features
+
+- **OS Validation**: Ensures the role runs only on supported operating systems.
+- **Software Installation**: Installs and configures essential packages.
+- **SSH Hardening**: Secures SSH configurations with custom settings.
+- **User Management**: Manages user accounts and enforces password policies.
+- **Firewall Configuration**: Sets up and configures firewalld with necessary ports.
+- **System Optimization**: Tweaks system limits and kernel parameters for optimal performance.
+- **Logging and Auditing**: Configures rsyslog and auditd for comprehensive logging.
+- **Cleanup Tasks**: Removes unnecessary files and cleans system caches.
 
 ## Requirements
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+- **Operating System**: AlmaLinux 9.4
+- **Ansible Version**: 2.17.5 or higher
+- **Dependencies**: Ensure all dependencies listed in `requirements.txt` are installed.
 
-## Role Variables
+## Installation
 
-A description of the settable variables for this role should go here, including any variables that are in `defaults/main.yml`, `vars/main.yml`, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+1. **Clone the Repository**
 
-## Dependencies
+   ```bash
+   git clone https://github.com/yourusername/RHEL9-Level3-Protect.git
+   cd RHEL9-Level3-Protect
+   ```
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+2. **Install Dependencies**
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. **Configure Inventory**
+   Update the `hosts.yml` file with your target hosts:
+   ```yaml
+   all:
+     hosts:
+       host1:
+         ansible_host: 10.0.66.66
+         ansible_user: vagrant
+         ansible_password: vagrant
+   ```
+
+## Usage
+
+Execute the playbook using the following command:
+
+```bash
+ansible-playbook -i hosts.yml site.yml
+```
+
+## Variables
+
+Customize the configuration by editing the variables in `defaults/main.yml`:
+
+- **SSH Settings**: Customize SSH port, login timeout, and other SSH parameters.
+- **User Credentials**: Set passwords for root, admin, and dev users.
+- **Firewall Ports**: Define which ports to open in the firewall.
+- **System Settings**: Adjust system limits, timezone, and other kernel parameters.
 
 ## Example Playbook
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+```yaml
+- name: Apply RHEL9 Level 3 Protect
+  hosts: all
+  become: true
+  roles:
+    - role: "{{ playbook_dir }}"
+```
+
+## License
+
+This project is licensed under the [Apache License 2.0](LICENSE).
+
+## Contributing
+
+Contributions are welcome! Please submit a pull request or open an issue for any enhancements or bugs.
+
+## Support
+
+For support, please contact [Berny Linville](mailto:berny.linville@devopsthink.org).
