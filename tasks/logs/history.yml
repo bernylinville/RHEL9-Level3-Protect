@@ -14,7 +14,7 @@
         state: directory
         owner: root
         group: root
-        mode: '0600'
+        mode: '0777'
 
     - name: "Configure history log | Set user command history log security policy | Copy history log record script"
       ansible.builtin.copy:

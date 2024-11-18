@@ -3,6 +3,10 @@ LOGTIME=$(date +%Y%m%d-%H-%M-%S)
 HISTFILESIZE=512
 export HISTTIMEFORMAT="%F_%T $(whoami)#$(who -u am i 2>/dev/null| awk '{print $NF}'|sed -e 's/[()]//g'):"
 export HISTFILE="/var/log/.history/${USER}.${LOGTIME}.history"
+if [ ! -d "${HISTFILE%/*}" ]; then
+  sudo mkdir -p "${HISTFILE%/*}"
+  sudo chmod 777 "${HISTFILE%/*}"
+fi
 if [ ! -f ${HISTFILE} ];then
   touch ${HISTFILE}
 fi

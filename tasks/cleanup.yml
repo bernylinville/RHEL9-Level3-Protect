@@ -33,4 +33,6 @@
   ansible.builtin.shell: history -c
 
 - name: "Cleanup | Enable {{ history_dir }} directory write protection"
-  ansible.builtin.shell: chattr -R +a {{ history_dir }}
+  ansible.builtin.shell: |
+    chmod 777 {{ history_dir }}
+    chattr -R +a {{ history_dir }}

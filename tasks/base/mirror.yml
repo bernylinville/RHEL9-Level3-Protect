@@ -1,31 +1,31 @@
----
+# ---
 
-- name: "Configure mirror | Configure os software mirror"
-  block:
-    # - name: "Configure mirror | Configure os software mirror | Find all repo files"
-    #   ansible.builtin.find:
-    #     paths: /etc/yum.repos.d/
-    #     patterns: "*.repo"
-    #   register: repo_files
+# - name: "Configure mirror | Configure os software mirror"
+#   block:
+#     # - name: "Configure mirror | Configure os software mirror | Find all repo files"
+#     #   ansible.builtin.find:
+#     #     paths: /etc/yum.repos.d/
+#     #     patterns: "*.repo"
+#     #   register: repo_files
 
-    # - name: "Configure mirror | Configure os software mirror | Comment out mirrorlist"
-    #   ansible.builtin.lineinfile:
-    #     path: "{{ item.path }}"
-    #     regexp: '^mirrorlist='
-    #     line: '# {{ item.path }}'
-    #     state: present
-    #   loop: "{{ repo_files.files }}"
+#     # - name: "Configure mirror | Configure os software mirror | Comment out mirrorlist"
+#     #   ansible.builtin.lineinfile:
+#     #     path: "{{ item.path }}"
+#     #     regexp: '^mirrorlist='
+#     #     line: '# {{ item.path }}'
+#     #     state: present
+#     #   loop: "{{ repo_files.files }}"
 
-    # - name: "Configure mirror | Configure os software mirror | Replace baseurl"
-    #   ansible.builtin.lineinfile:
-    #     path: "{{ item.path }}"
-    #     regexp: '^#baseurl=.*repo.almalinux.org'
-    #     line: "baseurl=https://{{ os_mirror }}/{{ item.path | regex_replace('^.*repo.almalinux.org/', '') }}"
-    #     backrefs: true
-    #   loop: "{{ repo_files.files }}"
+#     # - name: "Configure mirror | Configure os software mirror | Replace baseurl"
+#     #   ansible.builtin.lineinfile:
+#     #     path: "{{ item.path }}"
+#     #     regexp: '^#baseurl=.*repo.almalinux.org'
+#     #     line: "baseurl=https://{{ os_mirror }}/{{ item.path | regex_replace('^.*repo.almalinux.org/', '') }}"
+#     #     backrefs: true
+#     #   loop: "{{ repo_files.files }}"
 
-    - name: "Configure mirror | Configure os software mirror | Clean dnf cache"
-      ansible.builtin.command: sudo dnf clean all
+#     - name: "Configure mirror | Configure os software mirror | Clean dnf cache"
+#       ansible.builtin.command: sudo dnf clean all
 
-    - name: "Configure mirror | Configure os software mirror | Makecache"
-      ansible.builtin.command: sudo dnf makecache
+#     - name: "Configure mirror | Configure os software mirror | Makecache"
+#       ansible.builtin.command: sudo dnf makecache

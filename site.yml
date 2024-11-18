@@ -1,7 +1,12 @@
 ---
 
-- name: Apply RHEL9 Level 3 Protect
+- name: Apply RHEL9 Level 3 Protect and reboot
   hosts: all
   become: true
   roles:
     - role: "{{ playbook_dir }}"
+
+  post_tasks:
+    - name: Reboot system
+      command: sudo reboot
+      ignore_errors: true
