@@ -29,13 +29,6 @@
   tags:
     - rhel9_level3_protect_software
 
-- name: Run security tasks
-  ansible.builtin.import_tasks:
-    file: security/main.yml
-  when: rhel9_level3_protect_security
-  tags:
-    - rhel9_level3_protect_security
-
 - name: Run optimize tasks
   ansible.builtin.import_tasks:
     file: optimize/main.yml
@@ -49,6 +42,13 @@
   when: rhel9_level3_protect_logs
   tags:
     - rhel9_level3_protect_logs
+
+- name: Run security tasks
+  ansible.builtin.import_tasks:
+    file: security/main.yml
+  when: rhel9_level3_protect_security
+  tags:
+    - rhel9_level3_protect_security
 
 - name: Run cleanup tasks
   ansible.builtin.import_tasks:
