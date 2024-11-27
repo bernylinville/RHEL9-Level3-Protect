@@ -23,6 +23,8 @@
         password: "{{ ops_user_password | password_hash('sha512', 'mysecretsalt') }}"
         update_password: always
         state: present
+        create_home: true
+        system: false
       when: ops_user_exists.stat.exists is false
 
     - name: "Configure user password | Configure user and password | Check {{ dev_user_name }} user exists"
@@ -38,4 +40,6 @@
         password: "{{ dev_user_password | password_hash('sha512', 'mysecretsalt') }}"
         update_password: always
         state: present
+        create_home: true
+        system: false
       when: dev_user_exists.stat.exists is false

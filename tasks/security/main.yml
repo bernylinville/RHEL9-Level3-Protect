@@ -43,3 +43,4 @@
 - name: "SECURITY | Configure firewall"
   ansible.builtin.import_tasks:
     file: firewall.yml
+  when: configure_firewall | default(true)

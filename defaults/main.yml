@@ -136,3 +136,5 @@ reboot_required: true
 
 firewall_ports:
   - "{{ ssh_port }}/tcp"
+
+configure_firewall: true

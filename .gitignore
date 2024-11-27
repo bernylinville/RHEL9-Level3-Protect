@@ -53,3 +53,5 @@ benchparse/
 .python-version
 
 *prod*
+
+inventory/
